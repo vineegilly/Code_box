@@ -23,12 +23,7 @@ class FileTreeComponent extends Component {
     this.state = {
       active: null,
       outputArray: [],
-      get newFileObj() {
-        return this._newFileObj;
-      },
-      set newFileObj(value) {
-        this._newFileObj = value;
-      },
+      newFileObj: {},
       editor: null,
       tree: {
           "module": "Root",
@@ -114,23 +109,22 @@ class FileTreeComponent extends Component {
   };
 
   getValue() {
+    const { newFileObj } = this.state;
+    const { outputArray } = this.state; 
+
     for (var value of this.state.tree.children) {
-      console.log(value);
       this.state.editor.setSession(value.session);
-      console.log(this.state.editor.getSession().getValue());
-      console.log(value.module);
-     // this.setState({...this.state.newFileObj, codeVal: this.state.editor.getSession().getValue(), fileName:value.module});
-     
+    newFileObj.codeVal = this.state.editor.getSession().getValue();
+    newFileObj.fileName = value.module;
+    this.setState({
+      newFileObj: newFileObj
+    });
 
-      this.setState({
-        newFileObj: {
-              ...this.state.newFileObj,
-              codeVal: this.state.editor.getSession().getValue()
-        }
-    })
-
-    this.setState({ outputArray: [...this.state.outputArray, this.state.newFileObj] })
-
+    outputArray.push(newFileObj);
+    this.setState({
+      outputArray: outputArray
+    });
+   
     }
 
     console.log(this.state.outputArray);
