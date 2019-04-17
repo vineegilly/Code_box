@@ -4,7 +4,6 @@ import Toolbar from '@material-ui/core/Toolbar'
 import TypoGraphy from '@material-ui/core/Typography'
 import NavBar from './components/NavBar'
 import OutputWindow from './components/output';
-import ReactAce from './components/acesession';
 import SplitterLayout from 'react-splitter-layout';
 import 'react-splitter-layout/lib/index.css';
 
