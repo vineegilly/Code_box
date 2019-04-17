@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import React, { Component } from 'react';
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import Tree from './filetree/react-ui-tree.js';
 import FormDialog from './addfile';
@@ -109,13 +110,19 @@ class FileTreeComponent extends Component {
   };
 
   getValue() {
-    const { newFileObj } = this.state;
-    const { outputArray } = this.state; 
+     
 
     for (var value of this.state.tree.children) {
+      const { newFileObj } = this.state;
+    const { outputArray } = this.state;
       this.state.editor.setSession(value.session);
+      console.log(this.state.editor.getSession().getValue());
+      console.log(value.module);
     newFileObj.codeVal = this.state.editor.getSession().getValue();
     newFileObj.fileName = value.module;
+    let fileExt = value.module.split('.');
+    fileExt = fileExt[fileExt.length -1];
+    newFileObj.fileType = fileExt;
     this.setState({
       newFileObj: newFileObj
     });
@@ -128,6 +135,17 @@ class FileTreeComponent extends Component {
     }
 
     console.log(this.state.outputArray);
+
+    axios.post('/user',this.state.outputArray)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+
+
   }
 
   updateTree = (fileName) => {
